@@ -18,6 +18,22 @@ if ($installed -ne $null) {
     }
 }
 
+#Check that site token is filled out
+#S1SiteToken is the global and site variable for the SentinelOne site token.
+#This tells S1 what site to tie the agent to in the S1 portal after install
+
+if (!$env:QPAgentID) {
+    Write-Output "Quickpass site ID not found, please check site variables for QPAgentID and make sure it exists and is filled out"
+    Write-Output "S1 site token reporting as $env:SentinelOneSiteToken"
+    exit 1
+}
+elseif ($env:QPAgentID -eq 0) {
+    Write-Output "Quickpass site ID still has the default value of 0, please check site variables for QPAgentID and make sure it exists and is filled out"
+    exit 1
+}
+else {
+    Write-Output "S1 site token is $env:QPAgentID, proceeding to next step"
+}
 
 ##Quickpass Installation PowerShell Script
 
