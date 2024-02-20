@@ -126,5 +126,23 @@ write-host "Install error was: $ErrorMessage"
 exit 1
 }
 
-Write-Host "QuickPass Agent should have been installed successfully"
-exit 0
+#Check if quickpass was successfully installed
+$programName = "Quickpass Agent"
+
+# Check if the program is installed
+$installed = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object { $_.DisplayName -eq $programName }
+
+if ($installed -ne $null) {
+    Write-Output "$programName successfully installed."
+    exit 0
+} else {
+    # Check 32-bit registry if not found in 64-bit
+    $installed = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object { $_.DisplayName -eq $programName }
+    if ($installed -ne $null) {
+        Write-Output "$programName successfully installed."
+        exit 0
+    } else {
+        Write-Output "$programName failed to install"
+        exit 1
+    }
+}
