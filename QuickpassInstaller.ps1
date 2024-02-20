@@ -1,3 +1,24 @@
+#Check if quickpass is already installed
+$programName = "Quickpass Agent"
+
+# Check if the program is installed
+$installed = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object { $_.DisplayName -eq $programName }
+
+if ($installed -ne $null) {
+    Write-Output "$programName is already installed."
+    exit 0
+} else {
+    # Check 32-bit registry if not found in 64-bit
+    $installed = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object { $_.DisplayName -eq $programName }
+    if ($installed -ne $null) {
+        Write-Output "$programName is already installed."
+        exit 0
+    } else {
+        Write-Output "$programName is not installed. Continuing to installation."
+    }
+}
+
+
 ##Quickpass Installation PowerShell Script
 
 
@@ -102,7 +123,8 @@ Catch
 {
 $ErrorMessage = $_.Exception.Message
 write-host "Install error was: $ErrorMessage"
-#exit 1
+exit 1
 }
 
 Write-Host "QuickPass Agent should have been installed successfully"
+exit 0
