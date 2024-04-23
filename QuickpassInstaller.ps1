@@ -38,7 +38,7 @@ else {
 ##Quickpass Installation PowerShell Script
 
 
-$Path = "C:\Windows\LTSvc\packages\QPInstall"
+$Path = "."
 $DownloadURL = "https://storage.googleapis.com/qp-installer/production/Quickpass-Agent-Setup.exe"
 $Output = $path + "\Quickpass-Agent-Setup.exe"
 
