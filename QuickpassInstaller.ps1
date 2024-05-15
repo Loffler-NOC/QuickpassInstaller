@@ -133,7 +133,7 @@ write-host "Beginning installation of Quickpass"
 
 Try
 {
-Start-Process "$Output" -ArgumentList "/quiet $RestartOption INSTALLTOKEN=$QPInstallTokenIDBLQt CUSTOMERID=$QPAgentIDDBlQt REGION=$Region $MSAOption" -ErrorAction Stop
+Start-Process "$Output" -ArgumentList "/quiet $RestartOption INSTALLTOKEN=$QPInstallTokenIDBLQt CUSTOMERID=$QPAgentIDDBlQt REGION=$Region $MSAOption" -ErrorAction Stop -Wait -NoNewWindow
 }
 Catch
 {
